@@ -1,0 +1,46 @@
+@startuml voting usecase
+left to right direction
+
+'这个作用将线条模糊和扭曲化
+skinparam handwritten true
+skinparam packageStyle rectangle actor customer
+
+'下面的这些定  义了角色和用例的一些颜色设置
+skinparam usecase {
+    BackgroundColor Black
+    ActorFontColor white
+    FontColor white
+    BorderColor DarkSlateGray
+    ArrowColor Olive
+    ActorBorderColor black
+    ActorFontName Courier
+}
+
+
+actor proposer
+
+actor reviewer
+
+actor delegator
+
+actor voter
+
+actor guild_member
+
+actor technology_member
+
+rectangle Voting{
+    reviewer --|> guildmember
+    reviewer --|> technologymember
+
+    proposer --> (releaseProposal)
+    proposer --> (modifyProposal)
+    proposer --> (viewProposal)
+    proposer --> (writeProposal)
+    proposer --> (withdrawProposal)
+
+
+
+}
+
+@enduml

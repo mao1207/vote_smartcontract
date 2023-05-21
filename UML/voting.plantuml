@@ -1,0 +1,96 @@
+@startuml voting smart contract
+left to right direction
+
+'这个作用将线条模糊和扭曲化
+skinparam handwritten true
+skinparam packageStyle rectangle actor customer
+
+'下面的这些定  义了角色和用例的一些颜色设置
+skinparam usecase {
+    BackgroundColor Green
+    BorderColor DarkSlateGray
+    ArrowColor Olive
+    ActorBorderColor black
+    ActorFontName Courier
+}
+
+skinparam class{
+    BackgroundColor black
+    BorderColor white
+    FontColor white
+}
+
+'accountAddressID: user账号'
+'reputation_score: user's reputation_score'
+'vote_number: 用户投票数量，一人一票'
+'releasedProposal: 该用户发表过的提案'
+'writeProposal(): 用户编写提案，无返回值'
+'modifyProposal(): 用户修改已编写好的提案or从reviewer中打回来的提案, 无返回值'
+'releaseProposal()': 发表提案，返回值为true or false
+'viewProposal(): 查看提案(可以查看自己提案和公开的提案)'
+'withdrawProposal(): 撤销提案（必须是未被reviewer审核才可以撤销，在审核阶段以及预公开阶段无法撤销）'
+'queryProposal(): 查询提案'
+
+class user{
+    +accountAddressID: address
+    +reputation_score: uint256
+    +vote_number: uint256
+    +releasedProposal: array_of_proposal
+    +writeProposal() 
+    +modifyProposal()
+    +releaseProposal()
+    +viewProposal()
+    +withdrawProposal()
+    +queryProposal()
+}
+
+'votedProposal: 用户已投过票的提案'
+
+
+class voter{
+    +votedProposal: Arrays_of_proposal
+    +isDelegated: boolean
+    +delegatorAccount: address
+    +vote()
+    +delegate()
+    +withdrawTheDelegate()
+}
+
+voter --|> user
+reviewer --|> user
+
+class reviewer{
+    +guild_members_accountID: address
+    +technology_members_accountID: address
+    +reviewedProposal: array_of_proposal
+    +isFund()
+    +isTechnology()
+    +reviewProposal()
+    +viewReviewedProposal()
+    +publicProposal()
+    +delayProposal()
+}
+
+
+struct proposal{
+    +ID:uint256 
+    +title: String
+    +classfication: Arrays_of_classification
+    +reviewer: String
+    +short_Description:String
+    +long_Descirption:String
+    +timnestamp:time
+    +isTeamOrPerson: uint256
+    +teamMembersAccount: Arrays_of_address
+    +teamMembersResponsibilities: Arrays_of_String
+    +personAccount: address
+    +isReleased: boolean 
+    +isReviewed: boolean 
+    +isPublic: boolean 
+    +startDate: time
+    +endDate: time
+}
+
+proposal -- user: < belonging 
+
+@enduml
